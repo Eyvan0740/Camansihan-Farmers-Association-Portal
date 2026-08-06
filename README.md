@@ -1,29 +1,74 @@
-# Camansihan Farmers Association Portal
+# 🌱 Camansihan Farmers Association Portal
 
-A web-based Farmers Association Management System developed using Google Apps Script and Google Sheets.
+A web-based management system developed using **Google Apps Script** and **Google Sheets** for the Camansihan Farmers Association.
 
-## Features
+---
 
-- Dashboard
-- Members Management
-- Equipment Management
-- Borrowing Management
-- Fertilizer Monitoring
-- Payments Management
+## 📋 Features
 
-## Technology
+- 📊 Dashboard
+- 👨‍🌾 Member Management
+- 🚜 Equipment Management
+- 📦 Borrowing Management
+- 💰 Payments Monitoring
+
+---
+
+## 🛠️ Technologies Used
 
 - Google Apps Script
 - Google Sheets
-- HTML
-- CSS
+- HTML5
+- CSS3
 - JavaScript
 - Font Awesome
 
-## Status
+---
 
-🚧 Under Development
+## 📂 Project Structure
 
-## Author
+```
+AppsScript/
+│
+├── appsscript.json
+├── Code.gs
+├── Members.gs
+├── Payments.gs
+├── Equipment.gs
+├── Borrowing.gs
+├── index.html
+├── css.html
+└── javascript.html
+```
 
-Karl Aivan Siscar
+---
+
+## 🚧 Current Status
+
+The project is currently under active development.
+
+Completed modules:
+
+- ✅ Members
+- ✅ Equipment
+- ✅ Borrowing
+- ✅ Payments
+
+Modules under development:
+
+- Dashboard
+- Fertilizer
+- Seeds Fund
+- Every Harvest
+
+---
+
+## 👨‍💻 Developer
+
+**Karl Aivan Siscar**
+
+---
+
+## 📅 Version
+
+Current Version: **1.0**
