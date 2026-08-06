@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width,initial-scale=1">
+
+<title>
+
+Camansihan Farmers Association Portal
+
+</title>
+
+<link rel="preconnect"
+href="https://fonts.googleapis.com">
+
+<link rel="preconnect"
+href="https://fonts.gstatic.com"
+crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+<style>
+
+<?!= include("css"); ?>
+
+</style>
+
+</head>
+
+<body>
+
+<!-- =====================================================
+LOADING
+====================================================== -->
+
+<div id="loader">
+
+    <div class="loader-content">
+
+        <i class="fa-solid fa-seedling"></i>
+
+        <h2>
+
+            CAMANSIHAN
+
+        </h2>
+
+        <p>
+
+            Farmers Association Portal
+
+        </p>
+
+    </div>
+
+</div>
+
+<!-- =====================================================
+LOGIN PAGE
+====================================================== -->
+
+<section
+id="loginPage"
+class="page">
+
+<div class="login-wrapper">
+
+<div class="login-card">
+
+<div class="login-logo">
+
+<i class="fa-solid fa-seedling"></i>
+
+</div>
+
+<h2>
+
+CAMANSIHAN
+
+</h2>
+
+<p>
+
+Farmers Association Portal
+
+</p>
+
+<div class="form-group">
+
+<label>
+
+Username
+
+</label>
+
+<input
+type="text"
+id="loginUsername">
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Password
+
+</label>
+
+<input
+type="password"
+id="loginPassword">
+
+</div>
+
+<button
+id="btnLogin">
+
+LOGIN
+
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- =====================================================
+MAIN APPLICATION
+====================================================== -->
+
+<div
+id="mainApp"
+style="display:none;">
+<!-- =====================================================
+SIDEBAR
+====================================================== -->
+
+<aside
+class="sidebar">
+
+<div class="sidebar-header">
+
+<i class="fa-solid fa-seedling"></i>
+
+<span>
+
+CAMANSIHAN
+
+</span>
+
+</div>
+
+<nav>
+
+<button
+class="menu active"
+data-page="dashboardPage">
+
+<i class="fa-solid fa-house"></i>
+
+<span>
+
+Dashboard
+
+</span>
+
+</button>
+
+<button
+class="menu"
+data-page="membersPage">
+
+<i class="fa-solid fa-users"></i>
+
+<span>
+
+Members
+
+</span>
+
+</button>
+
+<button
+class="menu"
+data-page="fertilizerPage">
+
+<i class="fa-solid fa-sack-dollar"></i>
+
+<span>
+
+Fertilizer
+
+</span>
+
+</button>
+
+<button
+class="menu"
+data-page="seedsPage">
+
+<i class="fa-solid fa-seedling"></i>
+
+<span>
+
+Seeds Fund
+
+</span>
+
+</button>
+
+<button
+class="menu"
+data-page="harvestPage">
+
+<i class="fa-solid fa-wheat-awn"></i>
+
+<span>
+
+Every Harvest
+
+</span>
+
+</button>
+
+<button
+class="menu"
+data-page="equipmentPage">
+
+<i class="fa-solid fa-toolbox"></i>
+
+<span>
+
+Equipment
+
+</span>
+
+</button>
+
+<button
+class="menu"
+data-page="borrowingPage">
+
+<i class="fa-solid fa-handshake"></i>
+
+<span>
+
+Borrowed Equipment
+
+</span>
+
+</button>
+
+<button
+class="menu"
+data-page="settingsPage">
+
+<i class="fa-solid fa-gear"></i>
+
+<span>
+
+Settings
+
+</span>
+
+</button>
+
+<button
+class="menu logout">
+
+<i class="fa-solid fa-right-from-bracket"></i>
+
+<span>
+
+Logout
+
+</span>
+
+</button>
+
+</nav>
+
+</aside>
+
+<!-- =====================================================
+CONTENT
+====================================================== -->
+
+<div
+class="content">
+
+<header
+class="topbar">
+
+<div>
+
+<h1
+id="pageTitle">
+
+Dashboard
+
+</h1>
+
+<p>
+
+Camansihan Farmers Association Portal
+
+</p>
+
+</div>
+
+<div
+class="userArea">
+
+<i class="fa-solid fa-user"></i>
+
+<span
+id="currentUser">
+
+Administrator
+
+</span>
+
+</div>
+
+</header>
+
+<main
+id="pages">
+<!-- =====================================================
+DASHBOARD
+====================================================== -->
+
+<section
+id="dashboardPage"
+class="pageContent">
+
+<div class="pageHeader">
+
+<h2>
+
+Dashboard
+
+</h2>
+
+<p>
+
+Welcome to Camansihan Farmers Association Portal
+
+</p>
+
+</div>
+
+<div class="dashboardCards">
+
+<div class="card">
+
+<div class="cardIcon">
+
+<i class="fa-solid fa-users"></i>
+
+</div>
+
+<div class="cardInfo">
+
+<h3
+id="totalMembers">
+
+0
+
+</h3>
+
+<p>
+
+Members
+
+</p>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="cardIcon">
+
+<i class="fa-solid fa-sack-dollar"></i>
+
+</div>
+
+<div class="cardInfo">
+
+<h3
+id="totalFertilizer">
+
+0
+
+</h3>
+
+<p>
+
+Fertilizer Records
+
+</p>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="cardIcon">
+
+<i class="fa-solid fa-seedling"></i>
+
+</div>
+
+<div class="cardInfo">
+
+<h3
+id="totalSeeds">
+
+0
+
+</h3>
+
+<p>
+
+Seeds Fund
+
+</p>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="cardIcon">
+
+<i class="fa-solid fa-wheat-awn"></i>
+
+</div>
+
+<div class="cardInfo">
+
+<h3
+id="totalHarvest">
+
+0
+
+</h3>
+
+<p>
+
+Harvest Records
+
+</p>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="cardIcon">
+
+<i class="fa-solid fa-toolbox"></i>
+
+</div>
+
+<div class="cardInfo">
+
+<h3
+id="totalEquipment">
+
+0
+
+</h3>
+
+<p>
+
+Equipment
+
+</p>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="cardIcon">
+
+<i class="fa-solid fa-handshake"></i>
+
+</div>
+
+<div class="cardInfo">
+
+<h3
+id="totalBorrowed">
+
+0
+
+</h3>
+
+<p>
+
+Borrowed Equipment
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="welcomePanel">
+
+<h2>
+
+Welcome!
+
+</h2>
+
+<p>
+
+Use the menu on the left to manage members, fertilizer records, seeds fund, every harvest, equipment inventory, and borrowed equipment.
+
+</p>
+
+</div>
+
+</section>
+<!-- =====================================================
+MEMBERS PAGE
+====================================================== -->
+
+<section
+id="membersPage"
+class="pageContent"
+style="display:none;">
+
+<div class="pageHeader">
+
+<div>
+
+<h2>
+
+Members
+
+</h2>
+
+<p>
+
+Manage association members
+
+</p>
+
+</div>
+
+<div>
+
+<button
+id="btnAddMember"
+class="primaryButton">
+
+<i class="fa-solid fa-user-plus"></i>
+
+Add Member
+
+</button>
+
+</div>
+
+</div>
+
+<div class="tableToolbar">
+
+<input
+type="text"
+id="memberSearch"
+placeholder="Search member...">
+
+<button
+id="btnSearchMember">
+
+<i class="fa-solid fa-magnifying-glass"></i>
+
+Search
+
+</button>
+
+</div>
+
+<div class="tableContainer">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>ID</th>
+
+<th>Photo</th>
+
+<th>Last Name</th>
+
+<th>First Name</th>
+
+<th>Sex</th>
+
+<th>Contact</th>
+
+<th>Status</th>
+
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody
+id="memberTable">
+
+<tr>
+
+<td
+colspan="8"
+style="text-align:center;">
+
+No records found.
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+<!-- =====================================================
+MEMBER MODAL
+====================================================== -->
+
+<div
+id="memberModal"
+class="modal"
+style="display:none;">
+
+<div class="modalContent">
+
+<div class="modalHeader">
+
+<h2>
+
+Member Information
+
+</h2>
+
+<button
+id="closeMemberModal">
+
+<i class="fa-solid fa-xmark"></i>
+
+</button>
+
+</div>
+
+<div class="modalBody">
+
+<div class="formGrid">
+
+<div>
+
+<label>Member ID</label>
+
+<input
+type="text"
+id="memberID"
+placeholder="Enter Member ID">
+
+</div>
+
+<div>
+
+<label>Last Name</label>
+
+<input
+type="text"
+id="lastName">
+
+</div>
+
+<div>
+
+<label>First Name</label>
+
+<input
+type="text"
+id="firstName">
+
+</div>
+
+<div>
+
+<label>Middle Name</label>
+
+<input
+type="text"
+id="middleName">
+
+</div>
+
+<div>
+
+<label>Suffix</label>
+
+<input
+type="text"
+id="suffix">
+
+</div>
+
+<div>
+
+<label>Sex</label>
+
+<select
+id="sex">
+
+<option value="">Select</option>
+
+<option>Male</option>
+
+<option>Female</option>
+
+</select>
+
+</div>
+
+<div>
+
+<label>Birthdate</label>
+
+<input
+type="date"
+id="birthdate">
+
+</div>
+
+<div>
+
+<label>Civil Status</label>
+
+<input
+type="text"
+id="civilStatus">
+
+</div>
+
+<div>
+
+<label>Contact No.</label>
+
+<input
+type="text"
+id="contactNo">
+
+</div>
+
+<div>
+
+<label>Address</label>
+
+<input
+type="text"
+id="address">
+
+</div>
+
+<div>
+
+<label>Sitio</label>
+
+<input
+type="text"
+id="sitio">
+
+</div>
+
+<div>
+
+<label>Status</label>
+
+<select
+id="status">
+
+<option>ACTIVE</option>
+
+<option>INACTIVE</option>
+
+</select>
+
+</div>
+
+<div>
+
+<label>Remarks</label>
+
+<input
+type="text"
+id="remarks">
+
+</div>
+
+</div>
+
+</div>
+
+<div class="modalFooter">
+
+<button
+id="btnSaveMember"
+class="primaryButton">
+
+Save Member
+
+</button>
+
+<button
+id="btnCancelMember">
+
+Cancel
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+<!-- =====================================================
+FERTILIZER PAGE
+====================================================== -->
+
+<section
+id="fertilizerPage"
+class="pageContent"
+style="display:none;">
+
+<div class="pageHeader">
+
+<h2>Fertilizer Records</h2>
+
+<button
+id="btnAddFertilizer"
+class="primaryButton">
+
+<i class="fa-solid fa-plus"></i>
+
+New Record
+
+</button>
+
+</div>
+
+<div class="tableContainer">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Fertilizer ID</th>
+
+<th>Member ID</th>
+
+<th>Date</th>
+
+<th>Type</th>
+
+<th>Quantity</th>
+
+<th>Amount</th>
+
+<th>Status</th>
+
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody id="fertilizerTable">
+
+<tr>
+
+<td colspan="8">
+
+No fertilizer records found.
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+<!-- =====================================================
+SEEDS FUND PAGE
+====================================================== -->
+
+<section
+id="seedsPage"
+class="pageContent"
+style="display:none;">
+
+<div class="pageHeader">
+
+<h2>Seeds Fund</h2>
+
+<button
+id="btnAddSeed"
+class="primaryButton">
+
+<i class="fa-solid fa-plus"></i>
+
+New Record
+
+</button>
+
+</div>
+
+<div class="tableContainer">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Seeds ID</th>
+
+<th>Member ID</th>
+
+<th>Date</th>
+
+<th>Seed Type</th>
+
+<th>Quantity</th>
+
+<th>Amount</th>
+
+<th>Status</th>
+
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody id="seedTable">
+
+<tr>
+
+<td colspan="8">
+
+No seed records found.
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+<!-- =====================================================
+EVERY HARVEST PAGE
+====================================================== -->
+
+<section
+id="harvestPage"
+class="pageContent"
+style="display:none;">
+
+<div class="pageHeader">
+
+<h2>Every Harvest</h2>
+
+<button
+id="btnAddHarvest"
+class="primaryButton">
+
+<i class="fa-solid fa-plus"></i>
+
+New Record
+
+</button>
+
+</div>
+
+<div class="tableContainer">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Harvest ID</th>
+
+<th>Member ID</th>
+
+<th>Date</th>
+
+<th>Crop</th>
+
+<th>Quantity</th>
+
+<th>Amount</th>
+
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody id="harvestTable">
+
+<tr>
+
+<td colspan="7">
+
+No harvest records found.
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+<!-- =====================================================
+EQUIPMENT PAGE
+====================================================== -->
+
+<section
+id="equipmentPage"
+class="pageContent"
+style="display:none;">
+
+<div class="pageHeader">
+
+<h2>Equipment Inventory</h2>
+
+<button
+id="btnAddEquipment"
+class="primaryButton">
+
+<i class="fa-solid fa-plus"></i>
+
+Add Equipment
+
+</button>
+
+</div>
+
+<div class="tableContainer">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Equipment ID</th>
+
+<th>Equipment Name</th>
+
+<th>Category</th>
+
+<th>Quantity</th>
+
+<th>Available</th>
+
+<th>Condition</th>
+
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody id="equipmentTable">
+
+<tr>
+
+<td colspan="7">
+
+No equipment records found.
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+<!-- =====================================================
+BORROWED EQUIPMENT PAGE
+====================================================== -->
+
+<section
+id="borrowingPage"
+class="pageContent"
+style="display:none;">
+
+<div class="pageHeader">
+
+<h2>Borrowed Equipment</h2>
+
+<button
+id="btnBorrowEquipment"
+class="primaryButton">
+
+<i class="fa-solid fa-handshake"></i>
+
+Borrow Equipment
+
+</button>
+
+</div>
+
+<div class="tableContainer">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Borrow ID</th>
+
+<th>Member ID</th>
+
+<th>Equipment ID</th>
+
+<th>Borrow Date</th>
+
+<th>Return Date</th>
+
+<th>Status</th>
+
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody id="borrowTable">
+
+<tr>
+
+<td colspan="7">
+
+No borrowed equipment records found.
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+<!-- =====================================================
+SETTINGS PAGE
+====================================================== -->
+
+<section
+id="settingsPage"
+class="pageContent"
+style="display:none;">
+
+<div class="pageHeader">
+
+<h2>Settings</h2>
+
+</div>
+
+<div class="welcomePanel">
+
+<h3>
+
+System Information
+
+</h3>
+
+<p>
+
+Camansihan Farmers Association Portal
+
+Version 1.0
+
+</p>
+
+<hr>
+
+<p>
+
+Administrator settings and future system configuration will appear here.
+
+</p>
+
+</div>
+
+</section>
+
+</main>
+
+</div>
+
+</div>
+
+<?!= include("javascript"); ?>
+
+</body>
+
+</html>
