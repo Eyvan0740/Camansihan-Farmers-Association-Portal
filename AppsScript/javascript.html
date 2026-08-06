@@ -1,0 +1,1006 @@
+<script>
+
+/******************************************************************
+ CAMANSIHAN FARMERS ASSOCIATION PORTAL
+ javascript.html
+ Version 1.0
+******************************************************************/
+
+"use strict";
+
+/*=========================================================
+GLOBAL VARIABLES
+=========================================================*/
+
+let CURRENT_USER = null;
+
+let MEMBERS = [];
+let FERTILIZERS = [];
+let SEEDS = [];
+let HARVESTS = [];
+let EQUIPMENT = [];
+let BORROWINGS = [];
+
+/*=========================================================
+APPLICATION START
+=========================================================*/
+
+window.onload = function () {
+
+    showLoader();
+
+    setTimeout(function () {
+
+        hideLoader();
+
+        showLogin();
+
+        registerEvents();
+
+    },1000);
+
+};
+
+/*=========================================================
+REGISTER EVENTS
+=========================================================*/
+
+function registerEvents(){
+
+    const loginButton =
+        document.getElementById(
+            "btnLogin"
+        );
+
+    if(loginButton){
+
+        loginButton.onclick =
+            login;
+
+    }
+
+const logoutButton =
+    document.querySelector(
+        ".logout"
+    );
+
+if(logoutButton){
+
+    logoutButton.onclick =
+        logout;
+
+}
+
+const addMember =
+    document.getElementById(
+        "btnAddMember"
+    );
+
+if(addMember){
+
+addMember.onclick = function(){
+
+    clearMemberForm();
+
+    document
+        .getElementById("btnSaveMember")
+        .dataset.mode = "add";
+
+    openMemberModal();
+
+};
+
+}
+
+const closeMember =
+    document.getElementById(
+        "closeMemberModal"
+    );
+
+if(closeMember){
+
+    closeMember.onclick =
+        closeMemberModal;
+
+}
+const cancelMember =
+
+    document.getElementById(
+        "btnCancelMember"
+    );
+
+if(cancelMember){
+
+    cancelMember.onclick =
+        closeMemberModal;
+
+}
+const saveMemberButton =
+
+    document.getElementById(
+
+        "btnSaveMember"
+
+    );
+
+if(saveMemberButton){
+
+    saveMemberButton.onclick =
+
+        saveMember;
+
+}
+
+}
+
+/*=========================================================
+LOADER
+=========================================================*/
+
+function showLoader(){
+
+    document
+        .getElementById("loader")
+        .style.display="flex";
+
+}
+
+function hideLoader(){
+
+    document
+        .getElementById("loader")
+        .style.display="none";
+
+}
+
+/*=========================================================
+LOGIN PAGE
+=========================================================*/
+
+function showLogin(){
+
+    document
+        .getElementById("loginPage")
+        .style.display="flex";
+
+    document
+        .getElementById("mainApp")
+        .style.display="none";
+
+}
+
+/*=========================================================
+MAIN SYSTEM
+=========================================================*/
+
+function showMainApp(){
+
+    document
+        .getElementById("loginPage")
+        .style.display="none";
+
+    document
+        .getElementById("mainApp")
+        .style.display="flex";
+
+}
+
+/*=========================================================
+SERVER ERROR
+=========================================================*/
+
+function serverError(error){
+
+    console.error(error);
+
+    alert(
+        "Server Error\n\n"+
+        error.message
+    );
+
+}
+/*=========================================================
+LOGIN
+=========================================================*/
+
+function login(){
+
+    const username =
+        document
+        .getElementById("loginUsername")
+        .value
+        .trim();
+
+    const password =
+        document
+        .getElementById("loginPassword")
+        .value
+        .trim();
+
+    if(username===""){
+
+        alert(
+            "Please enter your username."
+        );
+
+        return;
+
+    }
+
+    if(password===""){
+
+        alert(
+            "Please enter your password."
+        );
+
+        return;
+
+    }
+
+    showLoader();
+
+    google.script.run
+
+        .withSuccessHandler(
+
+            loginSuccess
+
+        )
+
+        .withFailureHandler(
+
+            serverError
+
+        )
+
+        .login(
+
+            username,
+
+            password
+
+        );
+
+}
+
+/*=========================================================
+LOGIN SUCCESS
+=========================================================*/
+
+function loginSuccess(response){
+
+    hideLoader();
+
+    if(!response.success){
+
+        alert(
+
+            response.message
+
+        );
+
+        return;
+
+    }
+
+    CURRENT_USER =
+
+        response.data;
+
+    document
+
+        .getElementById(
+
+            "currentUser"
+
+        )
+
+        .textContent =
+
+        CURRENT_USER.fullname;
+
+showMainApp();
+
+registerEvents();
+
+initializePortal();
+
+}
+
+/*=========================================================
+LOGOUT
+=========================================================*/
+
+function logout(){
+
+    if(
+
+        !confirm(
+
+            "Do you want to logout?"
+
+        )
+
+    ){
+
+        return;
+
+    }
+
+    CURRENT_USER = null;
+
+    MEMBERS = [];
+
+    FERTILIZERS = [];
+
+    SEEDS = [];
+
+    HARVESTS = [];
+
+    EQUIPMENT = [];
+
+    BORROWINGS = [];
+
+    document
+
+        .getElementById(
+
+            "loginUsername"
+
+        )
+
+        .value = "";
+
+    document
+
+        .getElementById(
+
+            "loginPassword"
+
+        )
+
+        .value = "";
+
+    showLogin();
+
+}
+/*=========================================================
+INITIALIZE PORTAL
+=========================================================*/
+
+function initializePortal(){
+
+    registerMenus();
+
+    showPage("dashboardPage");
+
+    loadDashboard();
+
+    loadDashboardCounts();
+
+    loadMembers();
+
+}
+
+/*=========================================================
+REGISTER SIDEBAR MENUS
+=========================================================*/
+
+function registerMenus(){
+
+    document
+
+        .querySelectorAll(".menu[data-page]")
+
+        .forEach(function(menu){
+
+            menu.onclick = function(){
+
+                showPage(
+
+                    this.dataset.page
+
+                );
+
+            };
+
+        });
+
+}
+
+/*=========================================================
+SHOW PAGE
+=========================================================*/
+
+function showPage(pageID){
+
+    document
+
+        .querySelectorAll(".pageContent")
+
+        .forEach(function(page){
+
+            page.style.display = "none";
+
+        });
+
+    const page =
+
+        document.getElementById(pageID);
+
+    if(page){
+
+        page.style.display = "block";
+
+    }
+
+    const title =
+
+        page.querySelector("h2");
+
+    if(title){
+
+        document
+
+            .getElementById("pageTitle")
+
+            .textContent =
+
+            title.textContent;
+
+    }
+
+}
+
+/*=========================================================
+LOAD DASHBOARD
+=========================================================*/
+
+function loadDashboard(){
+
+    loadDashboardCounts();
+
+}
+
+/*=========================================================
+LOAD DASHBOARD COUNTS
+=========================================================*/
+
+function loadDashboardCounts(){
+
+    google.script.run
+
+        .withSuccessHandler(function(value){
+
+            document
+
+                .getElementById("totalMembers")
+
+                .textContent = value;
+
+        })
+
+        .memberCount();
+
+    google.script.run
+
+        .withSuccessHandler(function(value){
+
+            document
+
+                .getElementById("totalFertilizer")
+
+                .textContent = value;
+
+        })
+
+        .fertilizerCount();
+
+    google.script.run
+
+        .withSuccessHandler(function(value){
+
+            document
+
+                .getElementById("totalSeeds")
+
+                .textContent = value;
+
+        })
+
+        .seedCount();
+
+    google.script.run
+
+        .withSuccessHandler(function(value){
+
+            document
+
+                .getElementById("totalHarvest")
+
+                .textContent = value;
+
+        })
+
+        .harvestCount();
+
+    google.script.run
+
+        .withSuccessHandler(function(value){
+
+            document
+
+                .getElementById("totalEquipment")
+
+                .textContent = value;
+
+        })
+
+        .equipmentCount();
+
+    google.script.run
+
+        .withSuccessHandler(function(value){
+
+            document
+
+                .getElementById("totalBorrowed")
+
+                .textContent = value;
+
+        })
+
+        .borrowingCount();
+
+}
+/*=========================================================
+LOAD MEMBERS
+=========================================================*/
+
+function loadMembers(){
+
+    showLoader();
+
+    google.script.run
+
+        .withSuccessHandler(function(records){
+
+            hideLoader();
+
+            if(!Array.isArray(records)){
+
+                MEMBERS = [];
+
+                renderMembers();
+
+                return;
+
+            }
+
+            MEMBERS = records;
+
+            renderMembers();
+
+        })
+
+        .withFailureHandler(function(error){
+
+            hideLoader();
+
+            serverError(error);
+
+        })
+
+        .getMembers();
+
+}
+
+/*=========================================================
+RENDER MEMBERS
+=========================================================*/
+
+function renderMembers(){
+
+    const tbody = document.getElementById("memberTable");
+
+    if(!tbody){
+        alert("memberTable not found.");
+        return;
+    }
+
+    tbody.innerHTML = "";
+
+    if(!MEMBERS || MEMBERS.length === 0){
+
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="8" style="text-align:center;">
+                    No records found.
+                </td>
+            </tr>
+        `;
+
+        return;
+    }
+
+    let html = "";
+
+    MEMBERS.forEach(function(member){
+
+        html += `
+        <tr>
+
+            <td>${member["Member ID"] || ""}</td>
+
+            <td>
+                <img
+                    src="${member["Photo"] || ""}"
+                    width="50"
+                    onerror="this.src='https://placehold.co/50x50?text=Photo';">
+            </td>
+
+            <td>${member["Last Name"] || ""}</td>
+
+            <td>${member["First Name"] || ""}</td>
+
+            <td>${member["Sex"] || ""}</td>
+
+            <td>${member["Contact No."] || ""}</td>
+
+            <td>${member["Status"] || ""}</td>
+
+            <td>
+
+                <button
+                    onclick="editMember('${member["Member ID"]}')">
+
+                    Edit
+
+                </button>
+
+                <button
+                    onclick="removeMember('${member["Member ID"]}')">
+
+                    Delete
+
+                </button>
+
+            </td>
+
+        </tr>
+        `;
+
+    });
+
+    tbody.innerHTML = html;
+
+}
+/*=========================================================
+MEMBER MODAL
+=========================================================*/
+
+function openMemberModal(){
+
+    document
+
+        .getElementById("memberModal")
+
+        .style.display = "flex";
+
+}
+
+function closeMemberModal(){
+
+    document
+
+        .getElementById("memberModal")
+
+        .style.display = "none";
+
+}
+
+/*=========================================================
+CLEAR MEMBER FORM
+=========================================================*/
+
+function clearMemberForm(){
+
+    document
+
+        .getElementById("memberID")
+
+        .value = "";
+
+    document
+
+        .getElementById("lastName")
+
+        .value = "";
+
+    document
+
+        .getElementById("firstName")
+
+        .value = "";
+
+    document
+
+        .getElementById("middleName")
+
+        .value = "";
+
+    document
+
+        .getElementById("suffix")
+
+        .value = "";
+
+    document
+
+        .getElementById("sex")
+
+        .value = "";
+
+    document
+
+        .getElementById("birthdate")
+
+        .value = "";
+
+    document
+
+        .getElementById("civilStatus")
+
+        .value = "";
+
+    document
+
+        .getElementById("contactNo")
+
+        .value = "";
+
+    document
+
+        .getElementById("address")
+
+        .value = "";
+
+    document
+
+        .getElementById("sitio")
+
+        .value = "";
+
+    document
+
+        .getElementById("status")
+
+        .value = "ACTIVE";
+
+    document
+
+        .getElementById("remarks")
+
+        .value = "";
+
+}
+/*=========================================================
+EDIT MEMBER
+=========================================================*/
+
+function editMember(memberID){
+
+    console.log("EDIT REQUEST:", memberID);
+
+    google.script.run
+
+        .withSuccessHandler(function(member){
+
+    console.log("SERVER RETURNED:");
+    console.log(member);
+    console.log("TYPE:", typeof member);
+
+    alert(JSON.stringify(member));
+
+    if(!member){
+
+        alert("Member not found.");
+
+        return;
+
+    }
+
+            document.getElementById("memberID").value =
+                member["Member ID"] || "";
+
+            document.getElementById("lastName").value =
+                member["Last Name"] || "";
+
+            document.getElementById("firstName").value =
+                member["First Name"] || "";
+
+            document.getElementById("middleName").value =
+                member["Middle Name"] || "";
+
+            document.getElementById("suffix").value =
+                member["Suffix"] || "";
+
+            document.getElementById("sex").value =
+                member["Sex"] || "";
+
+            document.getElementById("birthdate").value =
+                member["Birthdate"] || "";
+
+            document.getElementById("civilStatus").value =
+                member["Civil Status"] || "";
+
+            document.getElementById("contactNo").value =
+                member["Contact No."] || "";
+
+            document.getElementById("address").value =
+                member["Address"] || "";
+
+            document.getElementById("sitio").value =
+                member["Sitio"] || "";
+
+            document.getElementById("status").value =
+                member["Status"] || "ACTIVE";
+
+document.getElementById("remarks").value =
+    member["Remarks"] || "";
+
+document
+    .getElementById("btnSaveMember")
+    .dataset.mode = "edit";
+
+openMemberModal();
+
+        })
+
+        .withFailureHandler(serverError)
+
+        .getMember(memberID);
+
+}
+/*=========================================================
+SAVE MEMBER
+=========================================================*/
+
+function saveMember(){
+
+    const isEdit =
+
+        document
+
+        .getElementById("btnSaveMember")
+
+        .dataset.mode === "edit";
+
+    const member = {
+
+        "Member ID":
+
+            document
+            .getElementById("memberID")
+            .value,
+"Photo": "",
+        "Last Name":
+
+            document
+            .getElementById("lastName")
+            .value.trim(),
+
+        "First Name":
+
+            document
+            .getElementById("firstName")
+            .value.trim(),
+
+        "Middle Name":
+
+            document
+            .getElementById("middleName")
+            .value.trim(),
+
+        "Suffix":
+
+            document
+            .getElementById("suffix")
+            .value.trim(),
+
+        "Sex":
+
+            document
+            .getElementById("sex")
+            .value,
+
+        "Birthdate":
+
+            document
+            .getElementById("birthdate")
+            .value,
+
+        "Civil Status":
+
+            document
+            .getElementById("civilStatus")
+            .value.trim(),
+
+        "Contact No.":
+
+            document
+            .getElementById("contactNo")
+            .value.trim(),
+
+        "Address":
+
+            document
+            .getElementById("address")
+            .value.trim(),
+
+        "Sitio":
+
+            document
+            .getElementById("sitio")
+            .value.trim(),
+
+        "Status":
+
+            document
+            .getElementById("status")
+            .value,
+
+        "Remarks":
+
+            document
+            .getElementById("remarks")
+            .value.trim()
+
+    };
+
+const runner =
+
+    google.script.run
+
+    .withSuccessHandler(function(result){
+
+        alert(result.message);
+
+        if(result.success){
+
+            closeMemberModal();
+
+            loadMembers();
+
+            loadDashboardCounts();
+
+            document
+
+                .getElementById("btnSaveMember")
+
+                .dataset.mode = "add";
+
+        }
+
+    })
+
+    .withFailureHandler(serverError);
+
+console.log("MODE:", isEdit);
+console.log("MEMBER ID:", member["Member ID"]);
+
+if(isEdit){
+
+    runner.updateMember(member);
+
+}
+
+else{
+
+    runner.saveMember(member);
+
+
+}
+
+}
+</script>
